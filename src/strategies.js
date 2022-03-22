@@ -17,7 +17,6 @@ exports.createStrategy = (request, response) => {
 exports.getStrategies = (request, response) => {
   const credential = request.params;
   const { userId } = credential;
-  console.log(userId);
   const db = connectDb();
   db.collection("strategies")
     .where("strategy.userId", "==", userId)
