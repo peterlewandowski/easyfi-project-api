@@ -29,9 +29,6 @@ exports.getStrategies = (request, response) => {
         return strategy;
       });
       response.send(strategyList);
-      snapshot.forEach((doc) => {
-        console.log(doc.id, "=>", doc.data());
-      });
     })
     .catch((err) => response.status(500).send(err));
 };
