@@ -15,6 +15,7 @@ exports.createStrategy = (request, response) => {
 };
 
 exports.getStrategies = (request, response) => {
+  response.setHeader('Access-Control-Allow-Origin', '*')
   const credential = request.params;
   const { userId } = credential;
   const db = connectDb();
