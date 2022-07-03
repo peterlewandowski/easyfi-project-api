@@ -31,3 +31,16 @@ exports.getStrategies = (request, response) => {
     })
     .catch((err) => response.status(500).send(err));
 };
+
+exports.updateStrategy = (request, response) => {
+  const { docId } = request.params;
+  const db = connectDb();
+  db.collection("strategies")
+    .doc(docId)
+    .update({
+      strategy: request.body,
+      created_at: FieldValue.serverTimestamp(),
+    })
+    .then(() => response.status(200).send("Record Updated"))
+    .catch((err) => response.status(500).send(err));
+};
