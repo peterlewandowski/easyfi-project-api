@@ -32,6 +32,16 @@ exports.getStrategies = (request, response) => {
     .catch((err) => response.status(500).send(err));
 };
 
+exports.getOneStrategy = (request, response) => {
+  const { docId } = request.params;
+  const db = connectDb();
+  db.collection("strategies")
+    .doc(docId)
+    .get()
+    .then((doc) => response.status(200).send(doc.data()))
+    .catch((err) => response.status(500).send(err));
+};
+
 exports.updateStrategy = (request, response) => {
   const { docId } = request.params;
   const db = connectDb();
