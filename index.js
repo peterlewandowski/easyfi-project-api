@@ -7,7 +7,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "https://easyfi.me",
+    origin: ["https://easyfi.me", "http://localhost:3000"],
   })
   );
   
@@ -16,6 +16,7 @@ app.use(express.json());
 // Routes
 app.post("/strategies", createStrategy);
 app.get("/strategies/:userId", getStrategies);
+
 
 app.listen(PORT, () => {
   console.log("Listening on Port: ", PORT);
