@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const { getStrategies, createStrategy, updateStrategy, getOneStrategy } = require("./src/strategies");
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5050;
 
 const app = express();
 
