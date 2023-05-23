@@ -7,7 +7,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["https://easyfi.me", "http://localhost:3000"],
+    origin: ["https://easyfi.me", "http://localhost:3000", "http://easyfi-app.s3-website-us-east-1.amazonaws.com"],
   })
   );
   
