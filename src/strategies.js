@@ -1,13 +1,13 @@
-const { FieldValue } = require("firebase-admin/firestore");
+const { Timestamp } = require("firebase-admin/firestore");
 const { connectDb } = require("./connectDb");
 
 exports.createStrategy = (request, response) => {
+  const db = connectDb();
   const newStrategy = {
     strategy: request.body,
-    enabled: true,
-    created_at: FieldValue.serverTimestamp(),
+    createdAt: Timestamp.now(),
+    timestamp: Timestamp.now().seconds,
   };
-  const db = connectDb();
   db.collection("strategies")
     .add(newStrategy)
     .then((doc) => response.status(201).send(doc.id))
@@ -48,7 +48,9 @@ exports.updateStrategy = (request, response) => {
   db.collection("strategies")
     .doc(docId)
     .update({
-      strategy: request.body,
+      // strategy: request.body,
+      "strategy.enabled": request.body.enabled,
+      // "enabled": request.body.enabled,
       created_at: FieldValue.serverTimestamp(),
     })
     .then(() => response.status(200).send("Record Updated"))
