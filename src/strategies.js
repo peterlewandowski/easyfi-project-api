@@ -1,13 +1,13 @@
-const { Timestamp } = require("firebase-admin/firestore");
+const { FieldValue } = require("firebase-admin/firestore");
 const { connectDb } = require("./connectDb");
 
 exports.createStrategy = (request, response) => {
-  const db = connectDb();
   const newStrategy = {
     strategy: request.body,
-    createdAt: Timestamp.now(),
-    timestamp: Timestamp.now().seconds,
+    enabled: true,
+    created_at: FieldValue.serverTimestamp(),
   };
+  const db = connectDb();
   db.collection("strategies")
     .add(newStrategy)
     .then((doc) => response.status(201).send(doc.id))
@@ -29,30 +29,5 @@ exports.getStrategies = (request, response) => {
       });
       response.send(strategyList);
     })
-    .catch((err) => response.status(500).send(err));
-};
-
-exports.getOneStrategy = (request, response) => {
-  const { docId } = request.params;
-  const db = connectDb();
-  db.collection("strategies")
-    .doc(docId)
-    .get()
-    .then((doc) => response.status(200).send(doc.data()))
-    .catch((err) => response.status(500).send(err));
-};
-
-exports.updateStrategy = (request, response) => {
-  const { docId } = request.params;
-  const db = connectDb();
-  db.collection("strategies")
-    .doc(docId)
-    .update({
-      // strategy: request.body,
-      "strategy.enabled": request.body.enabled,
-      // "enabled": request.body.enabled,
-      created_at: FieldValue.serverTimestamp(),
-    })
-    .then(() => response.status(200).send("Record Updated"))
     .catch((err) => response.status(500).send(err));
 };
